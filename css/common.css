@@ -5,23 +5,106 @@
   list-style: none;
 }
 
-body {
-  font-family: 'Lato', sans-serif;
+img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-html {
-  font-size: 62.5%;
+p {
+  color: #736464;
 }
 
 header {
-  font-size: 1.6rem;
+  border-top: solid 3px orange;
+  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+          box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
 }
 
-.navbar .navbar-brand {
+.dropdown-menu {
+  border-bottom: solid 3px orange;
+  -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.6);
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+  background-color: #434a50;
+}
+
+.news-and-events {
+  background-color: #f9f9f9;
+  border-top: solid 3px #1a8232;
+}
+
+.news-and-events h2,
+.news-and-events h3 {
+  font-size: 1.3rem;
+}
+
+.news-and-events p {
+  border-left: dashed 1px #a2e4b1;
+}
+
+.news-and-events li {
+  background: #fff;
+  position: relative;
+  -webkit-box-shadow: 0 0 0 0 rgba(90, 113, 208, 0.11), 0 4px 16px 0 rgba(167, 175, 183, 0.33);
+          box-shadow: 0 0 0 0 rgba(90, 113, 208, 0.11), 0 4px 16px 0 rgba(167, 175, 183, 0.33);
+}
+
+.news-and-events li:after {
+  content: '';
+  width: 50%;
+  height: 5px;
+  background-color: #a2e4b1;
+  right: 0;
+  display: block;
+  position: absolute;
+  top: 100%;
+  -webkit-transform: skewX(-40deg);
+          transform: skewX(-40deg);
+}
+
+.hero-banner {
+  position: relative;
+}
+
+.hero-banner .banner-details {
+  bottom: 40px;
+  right: 60px;
+  z-index: 1;
   font-size: 2rem;
+  font-weight: 300;
 }
 
-.navbar .dropdown-menu {
-  font-size: 1.4rem;
+.hero-banner .banner-details span {
+  font-size: 3rem;
+}
+
+.hero-banner .banner-details:after, .hero-banner .banner-details:before {
+  content: '';
+  position: absolute;
+}
+
+.hero-banner .banner-details:before {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #202327;
+  -webkit-transform: skewX(20deg);
+          transform: skewX(20deg);
+  z-index: -1;
+}
+
+.hero-banner .banner-details:after {
+  border-bottom: solid 3px orange;
+  height: 0;
+  z-index: 1;
+  width: 50%;
+  bottom: -3px;
+  right: -15px;
 }
 /*# sourceMappingURL=common.css.map */
