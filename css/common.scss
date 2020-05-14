@@ -1,26 +1,28 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  list-style: none;
 }
 
 body {
-    font-family: 'Lato', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 header {
+  font-size: 1.6rem;
+}
+// Navbar common css
+.navbar {
+  .navbar-brand {
+    font-size: 2rem;
+  }
+
+  .dropdown-menu {
     font-size: 1.4rem;
-}
-
-.navbar-brand {
-    font-size: 1.5rem;
-}
-
-.dropdown-menu {
-    font-size: 1.3rem;
+  }
 }
