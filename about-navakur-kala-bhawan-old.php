@@ -1,3 +1,18 @@
+<?php
+  require('./config/root_url.php');
+  require('./connection/db_connect.php');
+
+  $dataObj = new \stdClass();
+  $query = 'SELECT * FROM about_nabhankur';
+  $stmt = $con->prepare($query);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if($result->num_rows){
+    $row = $result->fetch_object();
+    $dataObj->title = $row->title;
+    $dataObj->body = $row->body;
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -50,12 +65,12 @@
                 </a>
               </li>
               <li class="nav-item active">
-                <a class="btn btn-success nav-link px-3"
+                <a class="nav-link px-3"
                   >About us <span class="sr-only">(current) </span></a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link px-3" href="#">Creative Box</a>
+                <a class="nav-link px-3" href="#">Art Tools</a>
               </li>
               <li class="nav-item dropdown">
                 <a
@@ -107,13 +122,13 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link px-3" href="#">Art & Craft</a>
+                <a class="nav-link px-3" href="#">Our Art School</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link px-3" href="#">Gallery</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link px-3" href="#">How to sell</a>
+                <a class="nav-link px-3" href="how-to-sell.html">How to sell</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link px-3" href="#"
@@ -133,7 +148,7 @@
             <div
               class="banner-details px-4 py-1 text-light position-absolute d-flex align-items-center"
             >
-              About <span class="ml-2">Navankur Kala Bhawan</span>
+              About <span class="ml-2">Nabhankur Kala Bhawan</span>
             </div>
           </div>
         </div>
@@ -143,7 +158,7 @@
         <div class="row">
           <div class="col-9 p-4">
             <!-- About us page  -->
-            <h2>Welcome</h2>
+            <h2 class="custom-box-shadow">Welcome</h2>
             <div class="page-details custom-box-shadow">
               <p>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
