@@ -1,19 +1,15 @@
 <?php
-  require('./config/root_url.php');
-  require('./connection/db_connect.php');
+  include('./../config/root_url.php');
+  require('./../connection/db_connect.php');
 
   $dataObj = new \stdClass();
-  $query = 'SELECT * FROM about_nabhankur';
+  $query = 'SELECT * FROM about_color_wings';
   $stmt = $con->prepare($query);
   $stmt->execute();
   $result = $stmt->get_result();
   if($result->num_rows){
     $row = $result->fetch_object();
-    $dataObj->title = $row->title;
-    $dataObj->body = $row->body;
-    $dataObj->banner_title = $row->banner_title;
-    $dataObj->banner_sub_title = $row->banner_sub_title;
-    $dataObj->image = $row->image;
+    $dataObj = $row;
   }
 ?>
 <!DOCTYPE html>
@@ -24,33 +20,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    />
-    <link
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/common.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>Navankar Kala Bhawan: Homepage</title>
+    <?php include './../decoration_component/css.php'; ?>
+    <title>Navankar Kala Bhawan: About Color Wings</title>
   </head>
 
   <body>
-    <div class="container-fluid p-0 inner-page">
+    <div class="container-fluid p-0">
       <?php
-        include './php_components/main_menu.php';
+        include './../php_components/color_wings_main_menu.php';
       ?>
       <!-- Hero banner starts -->
       <section class="row no-gutters p-0 pt-5">
         <div class="col-12">
           <div class="inner-hero-banner">
-            <img src="images/<?php echo $dataObj->image; ?>" />
+            <img src="<?php echo $root_url; ?>/images/<?php echo $dataObj->image; ?>" />
             <div class="banner-details">
             <?php
               if($dataObj->small_desc){
@@ -67,12 +50,10 @@
       <!-- Hero banner ends -->
       <section class="container-fluid bg-light">
         <div class="row">
-          <div class="col-9 p-4">
+          <div class="col-9 p-4 inner-page">
               <!-- About us page  -->
-              <h2 class="custom-box-shadow"><?php echo $dataObj->title ?></h2>
-              <div class="page-details custom-box-shadow">
-                <?php echo $dataObj->body ?>
-              </div>
+              <h2 class="page-title custom-box-shadow"><?php echo $dataObj->title ?></h2>
+              <div class="page-details custom-box-shadow"></div>
           </div>
           <div class="bg-white col-3 p-3">
             <div class="news-events-wrapper">
@@ -82,7 +63,7 @@
                     <div class="col-12 mb-5 custom-box-shadow">
                       <?php
                         // News and events
-                        include './php_components/news_and_events.php';
+                        include './../php_components/news_and_events.php';
                       ?>
                     </div>
                     <div class="col custom-box-shadow">
@@ -92,7 +73,7 @@
                       </h2>
                       <div class="featured-designs">
                         <ul class="p-3 mb-0">
-                          <li><img src="images/latest-img1.jpg" /></li>
+                          <li><img src="<?php echo $root_url; ?>/images/latest-img1.jpg" /></li>
                         </ul>
                       </div>
                     </div>
@@ -105,8 +86,13 @@
       </section>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <?php include './../decoration_component/js.php'; ?>
+    
+    <script>
+      var EditorJsJson = <?php echo $dataObj->body; ?>;      
+      $(document).ready(function(){
+        $('.page-details').html(exportJsonToHTML());
+      })
+    </script>
   </body>
 </html>

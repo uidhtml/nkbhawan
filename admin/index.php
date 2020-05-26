@@ -1,8 +1,17 @@
 <?php
-  include './../config/root_url.php';
+
+  include './../config/root_url.php';  
+  include './../connection/db_connect.php';
   if(!isset($_SESSION['userName'])){
-		header('Location: login.php'); // Dont give space between "Location" and ":"	
-	}
+    header('Location: login.php'); // Dont give space between "Location" and ":"	
+  }
+  
+
+  $newsObj = new \stdClass();
+  $newsQuery = 'SELECT * FROM news_and_events';
+  $newsStmt = $con->prepare($newsQuery);
+  $newsStmt->execute();
+  $newsResult = $newsStmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,13 +33,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-success py-3 custom-box-shadow">
           <span class="navbar-brand text-light d-flex mr-0 justify-content-between align-items-center w-100">Menu<i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
         </nav>
-          <ul class="block">
-            <li><a class="d-flex justify-content-between align-items-center p-3" href="#">Products<i class="fa fa-caret-right" aria-hidden="true"></i></a></li>
-            <li><a class="d-flex justify-content-between align-items-center p-3" href="#">Sellers<i class="fa fa-caret-right" aria-hidden="true"></i></a></li>
-            <li><a class="d-flex justify-content-between align-items-center p-3" href="#">Buyers<i class="fa fa-caret-right" aria-hidden="true"></i></a></li>
-            <li><a class="d-flex justify-content-between align-items-center p-3" href="#">Exhibition registrant<i class="fa fa-caret-right" aria-hidden="true"></i></a></li>
-            <li><a class="d-flex justify-content-between align-items-center p-3" href="<?php echo $root_url; ?>/admin/how-to-sell.php">How to sell<i class="fa fa-caret-right" aria-hidden="true"></i></a></li>
-          </ul>
+          <?php include './php_components/sidebar_menu.php'; ?>
         </div>
         <div class="col p-0">
           <?php include './php_components/main_menu.php';?>
@@ -61,24 +64,19 @@
               </ul>
               <div class="news-and-events rounded bg-white custom-box-shadow box-bottom-line">
                 <div class="block-title px-4 py-3 rounded">
-                  <h2 class="mb-0 font-weight-bold d-flex justify-content-between align-items-center">News and events <a class="btn btn-success" href="#"><span>View all</span><i class="fa fa-angle-right ml-2" aria-hidden="true"></i></a></h2>
+                  <h2 class="mb-0 font-weight-bold d-flex justify-content-between align-items-center">News and events <a class="btn btn-success" href="<?php echo $root_url; ?>/admin/news-and-events/all.php"><span>View all</span><i class="fa fa-angle-right ml-2" aria-hidden="true"></i></a></h2>
                 </div>
                 <ul class="news-block p-4">
-                  <li class="mb-3 pb-3">
-                    <h3 class="title d-flex justify-content-between align-items-center text-info"><span><i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>Exhebition at Delhi</span> <span class="action-wrapper custom-box-shadow"><i class="fa fa-pencil text-primary" aria-hidden="true"></i><i class="fa fa-times text-danger" aria-hidden="true"></i></span></h3>
-                    <p class="pl-4 ml-2 details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed dolor eveniet quo rem totam velit ipsam? Necessitatibus, corrupti consectetur, voluptate fugit officiis, vero fugiat cupiditate eum eveniet aliquid et. Ad?
-                    Voluptatibus nemo mollitia.</p>
-                  </li>
-                  <li class="mb-3 pb-3">
-                    <h3 class="title d-flex justify-content-between align-items-center text-info"><span><i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>Nkbhawan announced for online course</span><span class="action-wrapper custom-box-shadow"><i class="fa fa-pencil text-primary" aria-hidden="true"></i><i class="fa fa-times text-danger" aria-hidden="true"></i></span></h3>
-                    <p class="pl-4 ml-2 details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed dolor eveniet quo rem totam velit ipsam? Necessitatibus, corrupti consectetur, voluptate fugit officiis, vero fugiat cupiditate eum eveniet aliquid et. Ad?
-                    Voluptatibus nemo mollitia.</p>
-                  </li>
-                  <li class="mb-3 pb-3">
-                    <h3 class="title d-flex justify-content-between align-items-center text-info"><span><i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>Registration open</span><span class="action-wrapper custom-box-shadow"><i class="fa fa-pencil text-primary" aria-hidden="true"></i><i class="fa fa-times text-danger" aria-hidden="true"></i></span></h3>
-                    <p class="pl-4 ml-2 details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed dolor eveniet quo rem totam velit ipsam? Necessitatibus, corrupti consectetur, voluptate fugit officiis, vero fugiat cupiditate eum eveniet aliquid et. Ad?
-                    Voluptatibus nemo mollitia.</p>
-                  </li>
+                  <?php 
+                    if($newsResult->num_rows > 0){
+                      while($row = $newsResult->fetch_object()){
+                        echo '<li class="mb-3 pb-3">
+                        <h3 class="title pl-4 text-info"><i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>'.$row->title.'</h3>
+                        <p class="pl-4 ml-2 details">'.$row->details.'</p>
+                      </li>';
+                      }
+                    }
+                  ?>
                 </ul>
               </div>
           </div>

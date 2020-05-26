@@ -44,6 +44,7 @@
   border-top: solid 3px orange;
   height: 100vh;
   z-index: 1;
+  overflow: auto;
 }
 
 .sidebar h2 {
@@ -52,7 +53,7 @@
 
 .sidebar li {
   color: #555;
-  border-bottom: solid 1px #eee;
+  border-bottom: solid 1px #f3f3f2;
 }
 
 .sidebar li a {
@@ -69,16 +70,32 @@
 
 .sidebar li a:hover {
   background-color: #cdffd8;
-  font-weight: bold;
 }
 
 .sidebar li a:hover i {
   -webkit-transform: translateX(5px);
           transform: translateX(5px);
-  color: #28a745;
 }
 
 .sidebar li a.active {
-  background-color: #cdffd8;
+  background-color: #ffbe67;
+  color: #fff;
+}
+
+.sidebar li a.active i {
+  -webkit-transform: translateX(5px);
+          transform: translateX(5px);
+  color: #fff;
+}
+
+.sidebar .block {
+  margin-bottom: 20px;
+}
+
+.sidebar .block h2 {
+  padding: 1rem;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  color: #333;
 }
 /*# sourceMappingURL=style.css.map */

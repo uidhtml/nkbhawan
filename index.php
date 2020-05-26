@@ -1,5 +1,6 @@
 <?php
   include './config/root_url.php';
+  include './connection/db_connect.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,7 @@
   <body>
     <div class="container-fluid p-0">
       <?php
-        include './php_components/main_menu.php';
+        include './php_components/nabhankur_main_menu.php';
         // Hero banner starts
         include './php_components/hero_banner.php';
         //Hero banner ends
@@ -46,7 +47,7 @@
                     </h2>
                     <div class="featured-designs">
                       <ul class="p-3 mb-0">
-                        <li><img src="images/latest-img1.jpg" /></li>
+                        <li><img src="<?php echo $root_url; ?>/images/latest-img1.jpg" /></li>
                       </ul>
                     </div>
                   </div>
@@ -58,8 +59,6 @@
       </section>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <?php include './decoration_component/js.php'; ?>
   </body>
 </html>

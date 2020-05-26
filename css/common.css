@@ -51,6 +51,10 @@ header {
   max-width: none;
 }
 
+#editorjs .codex-editor__redactor {
+  padding-bottom: 0 !important;
+}
+
 .box-bottom-line {
   position: relative;
   color: #a2e4b1;
@@ -82,7 +86,7 @@ header {
   color: inherit;
 }
 
-.inner-page h2 {
+.inner-page .page-title {
   margin-bottom: 1rem;
   border-left: solid 3px orange;
   padding: 1rem 1.5rem;
@@ -159,6 +163,12 @@ header {
 
 .news-and-events .title {
   font-size: 1.1rem;
+  position: relative;
+}
+
+.news-and-events .title i {
+  position: absolute;
+  left: 0;
 }
 
 .news-and-events .details {

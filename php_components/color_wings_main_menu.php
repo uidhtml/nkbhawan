@@ -1,9 +1,9 @@
 <?php
-  require('./config/root_url.php');
+  require('./../config/root_url.php');
 ?>
 <header>
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark py-3">
-        <a class="navbar-brand" href="<?php echo $root_url; ?>">NK Bhawan</a>
+        <a class="navbar-brand" href="<?php echo $root_url; ?>/color_wings">Color Wings</a>
         <button
         class="navbar-toggler"
         type="button"
@@ -20,20 +20,18 @@
         id="navbarNavDropdown"
         >
         <ul class="navbar-nav">
-            <li class="nav-item active">
-            <a class="nav-link px-3">
-                Home <span class="sr-only">(current) </span>
-            </a>
-            </li>
             <li class="nav-item">
-            <a class="nav-link px-3" href="<?php echo $root_url; ?>/about-navakur-kala-bhawan.php"
-                >About us</a
+            <a class="nav-link px-3" href="<?php echo $root_url; ?>/"
+                >NK Bhawan</a
             >
             </li>
             <li class="nav-item">
             <a class="nav-link px-3" href="<?php echo $root_url; ?>/art_tools.php">Art Tools</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item">
+            <a class="nav-link px-3" href="<?php echo $root_url; ?>/color_wings.php">Color Wings</a>
+            </li>
+            <!-- <li class="nav-item dropdown">
             <a
                 class="nav-link dropdown-toggle px-3"
                 href="#"
@@ -55,7 +53,7 @@
                 Art Founder
                 </a>
             </div>
-            </li>
+            </li> -->
             <li class="nav-item dropdown">
             <a
                 class="nav-link dropdown-toggle px-3"

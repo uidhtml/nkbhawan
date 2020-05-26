@@ -1,9 +1,9 @@
 <?php
-  require('./config/root_url.php');
-  require('./connection/db_connect.php');
+  include('./../config/root_url.php');
+  require('./../connection/db_connect.php');
 
   $dataObj = new \stdClass();
-  $query = 'SELECT * FROM how_to_sell';
+  $query = 'SELECT * FROM about_color_wings';
   $stmt = $con->prepare($query);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -20,21 +20,21 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <?php include './decoration_component/css.php'; ?>
-    <title>Navankar Kala Bhawan: How to sell</title>
+    <?php include './../decoration_component/css.php'; ?>
+    <title>Navankar Kala Bhawan: Color Wings</title>
   </head>
 
   <body>
     <div class="container-fluid p-0">
       <?php
-        include './php_components/nabhankur_main_menu.php';
+        include './../php_components/color_wings_main_menu.php';
       ?>
       <!-- Hero banner starts -->
       <section class="row no-gutters p-0 pt-5">
         <div class="col-12">
           <div class="inner-hero-banner">
-            <img src="images/<?php echo $dataObj->image; ?>" />
-            <div class="banner-details center-details-pos">
+            <img src="<?php echo $root_url; ?>/images/<?php echo $dataObj->image; ?>" />
+            <div class="banner-details">
             <?php
               if($dataObj->small_desc){
                 echo '<div class="small-desc">'.$dataObj->small_desc.'</div>';
@@ -51,29 +51,31 @@
       <section class="container-fluid bg-light">
         <div class="row">
           <div class="col-9 p-4 inner-page">
-            <!-- How to sell page  -->
-            <h2 class="page-title custom-box-shadow"><?php echo $dataObj->title ?></h2>
-            <div class="page-details custom-box-shadow"></div>
+              <!-- About us page  -->
+              <h2 class="page-title custom-box-shadow"><?php echo $dataObj->title ?></h2>
+              <div class="page-details custom-box-shadow"></div>
           </div>
           <div class="bg-white col-3 p-3">
+            <div class="news-events-wrapper">
               <div class="row no-gutters p-0">
                 <div class="col-12 mb-2">
                   <div class="row no-gutters p-0">
-                  <div class="col-12 mb-5 custom-box-shadow">
-                    <?php
-                      // News and events
-                      include './php_components/news_and_events.php';
-                    ?>
-                  </div>
-                  <div class="col custom-box-shadow box-bottom-line">
-                    <h2 class="p-3 mb-0 text-light bg-dark">
-                      <i class="fa fa-picture-o mr-2" aria-hidden="true"></i
-                      ><span>Painting of the week</span>
-                    </h2>
-                    <div class="featured-designs">
-                      <ul class="p-3 mb-0">
-                        <li><img src="<?php echo $root_url; ?>/images/latest-img1.jpg" /></li>
-                      </ul>
+                    <div class="col-12 mb-5 custom-box-shadow">
+                      <?php
+                        // News and events
+                        include './../php_components/news_and_events.php';
+                      ?>
+                    </div>
+                    <div class="col custom-box-shadow">
+                      <h2 class="p-3 mb-0 text-light bg-dark">
+                        <i class="fa fa-picture-o mr-2" aria-hidden="true"></i
+                        ><span>Painting of the week</span>
+                      </h2>
+                      <div class="featured-designs">
+                        <ul class="p-3 mb-0">
+                          <li><img src="<?php echo $root_url; ?>/images/latest-img1.jpg" /></li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -84,7 +86,7 @@
       </section>
     </div>
 
-    <?php include './decoration_component/js.php'; ?>
+    <?php include './../decoration_component/js.php'; ?>
     
     <script>
       var EditorJsJson = <?php echo $dataObj->body; ?>;      

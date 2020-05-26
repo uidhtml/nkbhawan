@@ -39,6 +39,9 @@ header {
     width: calc(100% - 70px);
     max-width: none;
   }
+  .codex-editor__redactor {
+    padding-bottom: 0 !important;
+  }
 }
 // Custom classes
 .box-bottom-line {
@@ -69,7 +72,7 @@ header {
   }
 }
 .inner-page {
-  h2 {
+  .page-title {
     margin-bottom: 1rem;
     border-left: solid 3px orange;
     padding: 1rem 1.5rem;
@@ -80,6 +83,7 @@ header {
   .page-details {
     padding: 1.5rem;
     background-color: #fff;
+
     h3 {
       font-size: 1.4rem;
       margin-top: 2rem;
@@ -143,6 +147,11 @@ header {
   }
   .title {
     font-size: 1.1rem;
+    position: relative;
+    i {
+      position: absolute;
+      left: 0;
+    }
   }
   .details {
     font-size: 1rem;

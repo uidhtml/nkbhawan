@@ -4,24 +4,16 @@
 		header('Location: login.php'); // Dont give space between "Location" and ":"	
   }
 
-  require('./../connection/db_connect.php');
+  
   $pageData = new \stdClass();
   $msg = new \stdClass();
-  $query = 'SELECT * FROM how_to_sell';
-  $stmt = $con->prepare($query);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  if($result->num_rows > 0){
-    while($row = $result->fetch_object()){
-      $pageData = $row;
-    }
-  }
+  require('./../connection/db_connect.php');
   
   if($_POST){
     $title = $_POST['title'];
     $body = $_POST['body'];
     if(isset($title) && isset($body)){
-      $query = 'UPDATE how_to_sell SET title=?, body=?';
+      $query = 'UPDATE about_nabhankur SET title=?, body=?';
       $stmt = $con->prepare($query);
       $stmt->bind_param('ss', $title,$body);
       $rc = $stmt->execute();
@@ -29,7 +21,7 @@
 				$pageData->msg = 'Unable to execute the sql query.';
 				die('prepare() failed:'. htmlspecialchars($stmt->error));
 			}else{
-        $query = 'SELECT * FROM how_to_sell';
+        $query = 'SELECT * FROM about_nabhankur';
         $stmt = $con->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -43,6 +35,16 @@
 				mysqli_close($con);
 			}
     }
+  }else{
+    $query = 'SELECT * FROM about_nabhankur';
+    $stmt = $con->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result->num_rows > 0){
+      while($row = $result->fetch_object()){
+        $pageData = $row;
+      }
+    }
   }
 ?>
 <!DOCTYPE html>
@@ -55,7 +57,7 @@
     />
     <?php include './../decoration_component/css.php'; ?>
 
-    <title>Navankar Kala Bhawan: How to sell</title>
+    <title>Navankar Kala Bhawan: About Nabhankur</title>
   </head>
 
   <body class="admin-body-bg">
@@ -72,7 +74,7 @@
           
           <div class="container-fluid w-auto m-3 p-4 bg-white custom-box-shadow">
           <div class="page-title text-secondary mb-4 d-flex justify-content-between align-items-center">
-            <h1 class="m-0 font-weight-bold text-uppercase">How to sell</h1>
+            <h1 class="m-0 font-weight-bold text-uppercase">About Nabhankur Kala Bahwan</h1>
             <?php if($msg->text && $msg->success == -1){
                 echo $msg;
                 echo '<div class="alert m-0 alert-danger">'.$msg->text.'</div>';
@@ -83,7 +85,7 @@
             ?>
           </div>
             <div class="form-container">
-            <form id="form" action="<?php echo $root_url; ?>/admin/how-to-sell.php" method="post">
+            <form id="form" action="<?php echo $root_url; ?>/admin/about-nabhankur.php" method="post">
               <div class="form-group">
                 <label for="pageTitle">Page Title</label>
                   <input type="text" name="title" class="form-control" id="pageTitle" value="<?php echo $pageData->title ?>" aria-describedby="pageTitle">
@@ -102,7 +104,7 @@
         </div>
       </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <?php include './../editor/editor.php'; ?>
     <script>
       var pageBodyData = <?php echo $pageData->body; ?>;
@@ -113,6 +115,10 @@
         $('#body').val(JSON.stringify(pageBodyData));
         editorSettings.data = pageBodyData;
         editor = new EditorJS(editorSettings);
+        var alertDom = $('.alert');
+        setTimeout(function(){
+          alertDom.fadeOut(500);
+        },5000)
       });
 
       function Save() {
