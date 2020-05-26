@@ -2,7 +2,23 @@
   include './../config/root_url.php';
   if(!isset($_SESSION['userName'])){
 		header('Location: login.php'); // Dont give space between "Location" and ":"	
-	}
+  }
+
+  require('./../connection/db_connect.php');
+  $returnObj = new \stdClass();
+  $query = 'SELECT * FROM how_to_sell';
+  $stmt = $con->prepare($query);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if($result->num_rows > 0){
+    while($row = $result->fetch_object()){
+      $returnObj = $row;
+    }
+  }
+  
+  if($_POST){
+    //print_r($_POST);
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,25 +54,97 @@
           <div class="container-fluid w-auto m-3 p-4 bg-white custom-box-shadow">
           <div class="page-title text-secondary mb-4"><h1 class="m-0 font-weight-bold text-uppercase">How to sell</h1></div>
             <div class="form-container">
-              <form>
+              <form action="<?php echo $root_url; ?>/admin/how-to-sell.php" method="post">
               <div class="form-group">
                 <label for="pageTitle">Page Title</label>
-                  <input type="email" class="form-control" id="pageTitle" aria-describedby="pageTitle">
+                  <input type="text" name="title" class="form-control" id="pageTitle" value="<?php echo $returnObj->title ?>" aria-describedby="pageTitle">
               </div>
               <div class="form-group">
                 <label for="pageDetails">Body of page</label>
-                <div id="editorjs" contenteditable="false"></div>
-                <textarea id="output"></textarea>
-              </div></form>
+                <div id="editorjs"></div>
+                <input type="text" id="body" value="<?php echo gettype($returnObj->body); ?>" name="body">
+              </div>
                 <div class="button-container text-center"> 
-                  <button type="submit" class="btn btn-dark" onclick="Save()">Save</button>
+                  <input type="submit" class="btn btn-dark" onclick="Save()" value="Save">
                 </div>
-              
+                </form>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <?php include './../editor/editor.php'; ?>
+    <script>
+      //var myCustomData = {"time":1550476186479,"blocks":[{"type":"heading","data":{"text":"Editor.js","level":2}},{"type":"paragraph","data":{"text":"Hey. Meet the new Editor. On this page you can see it in action — try to edit this text. Source code of the page contains the example of connection and configuration."}},{"type":"heading","data":{"text":"Key features","level":3}}],"version":"2.8.1"}
+      var myCustomData = <?php echo $returnObj->body; ?>;
+      var bodyVal = null; 
+      $(document).ready(function(){
+        bodyVal = $('#body').val();
+        console.log(bodyVal);
+        console.log(myCustomData);
+
+      
+      var editor = new EditorJS({
+        holder : 'editorjs',
+        logLevel: 'ERROR',
+        tools: {
+          heading: {
+          class: Header,
+          inlineToolbar : true
+          },
+          linkTool: {
+          class: LinkTool,
+          config: {
+            endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching
+          }
+          },
+          image: SimpleImage,
+          image: {
+            class: ImageTool,
+            config: {
+                endpoints: {
+                byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+                byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+              }
+            }
+          },
+          list: {
+            class: List,
+            inlineToolbar: true,
+          },
+          quote: Quote,
+          paragraph: {
+            class: Paragraph,
+            inlineToolbar: true,
+          },
+          delimiter: Delimiter,
+          table: {
+            class: Table,
+          },
+          warning: Warning,
+          personality: {
+            class: Personality,
+            config: {
+              endpoint: 'http://localhost:8008/uploadFile'  // Your backend file uploader endpoint
+            }
+          }
+        },
+        autofocus: true,
+        minHeight: 300,
+        data: myCustomData
+      });
+    });
+
+      function Save() {
+        editor.save().then((outputData) => {
+            var output = document.getElementById('output');
+            output.value = JSON.stringify(outputData);
+            console.log(outputData);
+          }).catch((error) => {
+            console.log('Saving failed: ', error)
+        }); 
+      }
+    </script>
   </body>
 </html>
